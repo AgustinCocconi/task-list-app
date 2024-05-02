@@ -1,0 +1,46 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  --padding-top: 50px;
+  --padding-bottom: 50px;
+  --padding-start: 7%;
+  --padding-end: 7%;
+  .tasks-container {
+    .task-container {
+      background-color: #15101c;
+      border-radius: 10px;
+      padding: 8px 12px;
+      .edit-task-input {
+        border: none;
+        background: none;
+        outline: none;
+        width: 100%;
+        padding: 0;
+        color: white;
+      }
+      mat-error {
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-preview {
+  background-color: #15101c;
+  border-radius: 10px;
+  padding: 8px 12px;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.tasks-container.cdk-drop-list-dragging .task-container:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

@@ -1,0 +1,42 @@
+<ion-content class="home-container">
+  <form [formGroup]="taskForm" class="width-100 flex gap-16">
+    <mat-form-field class="width-100">
+      <mat-label>Agrega tarea</mat-label>
+      <input matInput placeholder="Nueva tarea" formControlName="newTask">
+      <mat-error *ngIf="taskForm.controls.newTask.errors?.['required'] && taskForm.controls.newTask.touched">
+        Campo requerido
+      </mat-error>
+    </mat-form-field>
+    <button mat-fab color="primary" type="button" aria-label="Agregar tarea" (click)="addTask()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </form>
+  <div class="width-100">
+    <div class="top-24 bot-12 white">Tareas</div>
+    <div class="tasks-container flex flex-column gap-16" cdkDropList (cdkDropListDropped)="drop($event)">
+      <div *ngFor="let task of tasks$ | async" class="task-container flex align-items-center justify-content-between"
+        cdkDrag [cdkDragStartDelay]="300">
+        <div *ngIf="editTaskId !== task.id" class="white" (click)="editTask(task)">{{task.name}}</div>
+        <form [formGroup]="editTaskForm">
+          <ng-container *ngIf="editTaskId === task.id">
+            <input #editInput formControlName="editTaskName" class="edit-task-input">
+            <mat-error *ngIf="editTaskForm.controls.editTaskName.errors?.['required']">
+              Campo requerido
+            </mat-error>
+          </ng-container>
+        </form>
+        <div class="flex">
+          <button mat-icon-button color="primary" *ngIf="editTaskId !== task.id" (click)="editTask(task)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" *ngIf="editTaskId === task.id" (click)="saveTask()">
+            <mat-icon>done</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" (click)="deleteTask(task.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
